@@ -526,10 +526,10 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:my_dash/PageMenu.dart';
-import 'package:my_dash/Pagefromswipe0.dart';
-import 'package:my_dash/Pagefromswipe1.dart';
-import 'package:my_dash/Pagefromswipe2.dart';
+import 'package:my_dash/Naviguation%20menu/PageMenu.dart';
+import 'package:my_dash/Layout/Pagefromswipe0.dart';
+import 'package:my_dash/Layout/Pagefromswipe1.dart';
+import 'package:my_dash/Layout/Pagefromswipe2.dart';
 import 'package:provider/provider.dart';
 
 class Page0 extends StatefulWidget {

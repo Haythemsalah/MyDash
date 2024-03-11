@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:my_dash/PageMenu.dart'; // Import your pages
-import 'package:my_dash/PageB.dart'; // Import your pages
-import 'package:my_dash/PageC.dart';
-import 'package:my_dash/PageD.dart'; 
+import 'package:my_dash/Naviguation%20menu/PageMenu.dart'; // Import your pages
+import 'package:my_dash/Layout/PageB.dart'; // Import your pages
+import 'package:my_dash/Layout/PageC.dart';
+import 'package:my_dash/Layout/PageD.dart'; 
 // Import your pages
 import 'package:provider/provider.dart';
 

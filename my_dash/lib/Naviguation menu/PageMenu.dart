@@ -1,13 +1,14 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:my_dash/Page0.dart';
+import 'package:my_dash/Layout/CustomSearch.dart';
+import 'package:my_dash/Layout/Page0.dart';
 //import 'package:my_dash/Page1.dart';
-import 'package:my_dash/PageChartJson.dart';
-import 'package:my_dash/Page3.dart';
-import 'package:my_dash/PageChatBot.dart';
+import 'package:my_dash/Layout/PageChartJson.dart';
+import 'package:my_dash/Layout/Page3.dart';
+import 'package:my_dash/Layout/PageChatBot.dart';
 import 'package:provider/provider.dart';
-import 'package:my_dash/Profile.dart';
+import 'package:my_dash/Layout/Profile.dart';
 class PageA extends StatefulWidget {
   const PageA({Key? key, required this.title}) : super(key: key);
 
@@ -90,6 +91,25 @@ IconButton(
     color: themeProvider.isDarkMode ? Colors.white : Colors.black,
   ),
 ),
+IconButton(
+  onPressed: () async {
+    // Show the search bar and wait for the user to input a query
+    String? result = await showSearch<String?>(
+      context: context,
+      delegate: CustomSearchDelegate(), // Replace with your custom search delegate
+    );
+
+    // Handle the search result (you can do something with the result if needed)
+    if (result != null && result.isNotEmpty) {
+      print('Search result: $result');
+    }
+  },
+  icon: Icon(
+    Icons.search,
+    color: themeProvider.isDarkMode ? Colors.white : Colors.black,
+  ),
+),
+
         ],
       ),
       body: TabBarView(
