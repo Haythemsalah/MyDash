@@ -56,7 +56,8 @@ dependencies:
   fl_animated_linechart: ^1.1.9
   
   flutter_echarts: ^2.5.0
-  
+  firebase_core: ^2.27.0
+  firebase_messaging: ^14.7.19
   multi_charts: ^0.3.0
   radar_chart: ^2.1.0
   pie_chart: ^5.4.0
@@ -64,6 +65,7 @@ dependencies:
   mrx_charts: ^0.1.3
   flutter_login_template: ^1.1.0
   syncfusion_flutter_gauges: ^24.2.9
+  flutter_local_notifications: ^17.0.1
 
   
 dev_dependencies:
