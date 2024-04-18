@@ -321,7 +321,9 @@ class Page3 extends StatefulWidget {
 
 class _Page3State extends State<Page3> {
   String? fcmToken;
+final _phoneController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -340,67 +342,146 @@ class _Page3State extends State<Page3> {
     );
   }
 
-  void getToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    setState(() {
-      fcmToken = token;
-    });
-  }
+ void getToken() async {
 
-  void sendTokenToServer(String? token) async {
-    print(token);
+    String? token = await FirebaseMessaging.instance.getToken();
+
+    setState(() {
+
+      fcmToken = token;
+
+    });
+
+  }
+  void sendTokenToServer(String phone, String? token) async {
+
+    print("Sending Phone: $phone with Token: $token");
+
     try {
+
       final response = await http.post(
+
         Uri.parse('https://notificationfirebase.onrender.com/register-token/'),
-        headers: <String, String>{
+
+       headers: <String, String>{
+
           'Content-Type': 'application/json; charset=UTF-8',
+
         },
+
         body: jsonEncode(<String, String>{
+
+          'phone': phone,
+
           'token': token!,
+
         }),
+
       );
 
+ 
+
       if (response.statusCode == 200) {
-        print("Token sent successfully");
+
+        print("Data sent successfully");
+
       } else {
-        print("Failed to send token. Error: ${response.body}");
+
+        print("Failed to send data. Error: ${response.body}");
+
       }
+
     } catch (e) {
-      print("Error sending token: $e");
+
+      print("Error sending data: $e");
+
     }
+
   }
 
-  void handleSendToken() {
-    if (fcmToken != null) {
-      sendTokenToServer(fcmToken);
-    } else {
-      print("FCM token not available yet.");
+
+
+  void handleSubmit() {
+
+    if (_formKey.currentState!.validate()) {
+
+      if (fcmToken != null) {
+
+        sendTokenToServer(_phoneController.text, fcmToken);
+
+      } else {
+
+        print("FCM token not available yet.");
+
+      }
+
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+
       appBar: AppBar(
+
         title: Text('Flutter Firebase Messaging Demo'),
+
       ),
+
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Ready to receive notifications!'),
-            SizedBox(height: 20),
-            if (fcmToken != null) Text('FCM Token: $fcmToken'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: handleSendToken,
-              child: Text('Send Token to Server'),
-            ),
-          ],
+
+        child: Form(
+
+          key: _formKey,
+
+          child: Column(
+
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: <Widget>[
+
+              TextFormField(
+
+                controller: _phoneController,
+
+                decoration: InputDecoration(labelText: 'Enter your phone number'),
+
+                validator: (value) {
+
+                  if (value == null || value.isEmpty) {
+
+                    return 'Please enter your phone number';
+
+                  }
+
+                  return null;
+
+                },
+
+              ),
+
+              SizedBox(height: 20),
+
+              ElevatedButton(
+
+                onPressed: handleSubmit,
+
+                child: Text('Register Phone and Send Token'),
+
+              ),
+
+            ],
+
+          ),
+
         ),
+
       ),
+
     );
+
   }
+
 }
-
-
