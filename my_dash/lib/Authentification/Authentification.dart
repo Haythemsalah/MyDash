@@ -230,6 +230,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 import '../Naviguation menu/PageMenu.dart';
 
@@ -344,7 +345,15 @@ class CodeVerificationPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            //  TextField(
+            //   decoration: InputDecoration(labelText: 'Verification Code'),
+            //   onChanged: (value) => _verifyCode(context, value),
+            // ),
             TextField(
+              keyboardType: TextInputType.number, // Restrict keyboard to numbers
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly // Only allow digits
+              ],
               decoration: InputDecoration(labelText: 'Verification Code'),
               onChanged: (value) => _verifyCode(context, value),
             ),
