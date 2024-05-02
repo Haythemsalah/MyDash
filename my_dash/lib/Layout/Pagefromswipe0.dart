@@ -87,6 +87,7 @@ class Pagefromswipe0 extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
+        
           Container(
             height: 250, // Adjust the height based on your needs
             child: ListView.builder(

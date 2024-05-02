@@ -55,6 +55,8 @@ dependencies:
   syncfusion_flutter_charts: ^24.2.6
   fl_animated_linechart: ^1.1.9
   
+  
+  
   flutter_echarts: ^2.5.0
   firebase_core: ^2.27.0
   firebase_messaging: ^14.7.19
@@ -67,6 +69,7 @@ dependencies:
   syncfusion_flutter_gauges: ^24.2.9
   flutter_local_notifications: ^17.0.1
   firebase_installations: ^16.3.6
+  firebase_auth: ^4.17.8
 
   
 dev_dependencies:
