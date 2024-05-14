@@ -94,7 +94,7 @@ import 'package:my_dash/Naviguation%20menu/PageMenu.dart';
 import 'package:provider/provider.dart';
 import 'package:my_dash/Layout/Page3.dart';
 import 'package:my_dash/services/firebase_api.dart'; // Import your Firebase API file here
-
+import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -147,7 +147,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
@@ -179,6 +179,28 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+  Widget build2(BuildContext context) {
+    return FutureBuilder(
+      future: checkLoggedInStatus(), // Check logged-in status
+      builder: (context, AsyncSnapshot<bool> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else {
+          if (snapshot.data == true) {
+            return PageA(title: ''); // Navigate to authenticated screen if logged in
+          } else {
+            return SignInPage(); // Navigate to sign-in screen if not logged in
+          }
+        }
+      },
+    );
+  }
+
+  // Function to check logged-in status using SharedPreferences
+  Future<bool> checkLoggedInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false; // Return false if isLoggedIn key doesn't exist
   }
 }
 // import 'package:firebase_core/firebase_core.dart';
