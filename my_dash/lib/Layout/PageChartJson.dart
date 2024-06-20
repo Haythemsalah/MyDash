@@ -1,254 +1,9 @@
 
-// import 'dart:convert';
 // import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
 // import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:my_dash/services/activation_client_api.dart';
 
 // class Page2 extends StatefulWidget {
-//   // ignore: prefer_const_constructors_in_immutables
-//   Page2({Key? key}) : super(key: key);
-
-//   @override
-//   Page2State createState() => Page2State();
-// }
-
-// class Page2State extends State<Page2> {
-//   List<_SalesData> data = [];
-//   bool loading = true;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData("assets/event.json"); // Replace with the correct path to your JSON file
-//   }
-
-//   Future<void> fetchData(String jsonFileName) async {
-//     try {
-//       // Load JSON content from the file
-//       String jsonString = await rootBundle.loadString(jsonFileName);
-
-//       // Parse the JSON data
-//       final jsonData = json.decode(jsonString);
-
-//       // Process your data and create _SalesData objects
-//       data = jsonData.map<_SalesData>((chartData) {
-//         // Add a null check for date and Chiffre d'affaire
-//         String date = chartData['date'] ?? '';
-//         double chiffreAffaire = chartData["chiffreAffaire"] != null
-//             ? double.parse(chartData["chiffreAffaire"])
-//             : 0.0;
-//         return _SalesData(
-//           date,
-//           chiffreAffaire,
-//         );
-//       }).toList();
-
-//       setState(() {
-//         loading = false;
-//       });
-//     } catch (e) {
-//       // Handle errors
-//       print("Error loading/processing data: $e");
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Syncfusion Flutter chart'),
-//       ),
-//       body: loading
-//           ? Center(child: CircularProgressIndicator())
-//           : PageView.builder(
-//               scrollDirection: Axis.vertical,
-//               itemCount: 2, // Number of charts
-//               itemBuilder: (context, index) {
-//                 return index == 0
-//                     ? Container(
-//                         // Line chart
-//                         child: SfCartesianChart(
-//                           primaryXAxis: CategoryAxis(),
-//                           title: ChartTitle(text: 'Chiffre d\'affaire analysis'),
-//                           legend: Legend(isVisible: true),
-//                           tooltipBehavior: TooltipBehavior(enable: true),
-//                           series: <CartesianSeries<_SalesData, String>>[
-//                             LineSeries<_SalesData, String>(
-//                               dataSource: data,
-//                               xValueMapper: (_SalesData sales, _) => sales.date,
-//                               yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                               name: 'Chiffre d\'affaire',
-//                               dataLabelSettings: DataLabelSettings(isVisible: true),
-//                             ),
-//                           ],
-//                         ),
-//                       )
-//                     : Container(
-//                         // Bar chart
-//                         child: SfCartesianChart(
-//                           primaryXAxis: CategoryAxis(),
-//                           title: ChartTitle(text: 'Bar Chart'),
-//                           legend: Legend(isVisible: true),
-//                           tooltipBehavior: TooltipBehavior(enable: true),
-//                           series: <CartesianSeries<_SalesData, String>>[
-//                             BarSeries<_SalesData, String>(
-//                               dataSource: data,
-//                               xValueMapper: (_SalesData sales, _) => sales.date,
-//                               yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                               name: 'Chiffre d\'affaire',
-//                               dataLabelSettings: DataLabelSettings(isVisible: true),
-//                             ),
-//                           ],
-//                         ),
-//                       );
-//               },
-//             ),
-//     );
-//   }
-// }
-
-// class _SalesData {
-//   _SalesData(this.date, this.chiffreAffaire);
-
-//   final String date;
-//   final double chiffreAffaire;
-// }
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
-// import 'package:syncfusion_flutter_charts/charts.dart';
-
-// class Page2 extends StatefulWidget {
-//   // ignore: prefer_const_constructors_in_immutables
-//   Page2({Key? key}) : super(key: key);
-
-//   @override
-//   Page2State createState() => Page2State();
-// }
-
-// class Page2State extends State<Page2> {
-//   List<_SalesData> data = [];
-//   bool loading = true;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData("assets/event.json"); // Replace with the correct path to your JSON file
-//   }
-
-//   Future<void> fetchData(String jsonFileName) async {
-//     try {
-//       // Load JSON content from the file
-//       String jsonString = await rootBundle.loadString(jsonFileName);
-
-//       // Parse the JSON data
-//       final jsonData = json.decode(jsonString);
-
-//       // Process your data and create _SalesData objects
-//       data = jsonData.map<_SalesData>((chartData) {
-//         // Add a null check for date and Chiffre d'affaire
-//         String date = chartData['date'] ?? '';
-//         double chiffreAffaire = chartData["chiffreAffaire"] != null
-//             ? double.parse(chartData["chiffreAffaire"])
-//             : 0.0;
-//         return _SalesData(
-//           date,
-//           chiffreAffaire,
-//         );
-//       }).toList();
-
-//       setState(() {
-//         loading = false;
-//       });
-//     } catch (e) {
-//       // Handle errors
-//       print("Error loading/processing data: $e");
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Syncfusion Flutter chart'),
-//       ),
-//       body: loading
-//           ? Center(child: CircularProgressIndicator())
-//           : DefaultTabController(
-//               length: 2,
-//               child: Column(
-//                 children: [
-//                   TabBar(
-//                     tabs: [
-//                       Tab(text: 'Line Chart'),
-//                       Tab(text: 'Bar Chart'),
-//                     ],
-//                   ),
-//                   Expanded(
-//                     child: TabBarView(
-//                       children: [
-//                         // Line chart
-//                         Container(
-//                           child: SfCartesianChart(
-//                             primaryXAxis: CategoryAxis(),
-//                             title: ChartTitle(text: 'Chiffre d\'affaire analysis'),
-//                             legend: Legend(isVisible: true),
-//                             tooltipBehavior: TooltipBehavior(enable: true),
-//                             series: <CartesianSeries<_SalesData, String>>[
-//                               LineSeries<_SalesData, String>(
-//                                 dataSource: data,
-//                                 xValueMapper: (_SalesData sales, _) => sales.date,
-//                                 yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                                 name: 'Chiffre d\'affaire',
-//                                 dataLabelSettings: DataLabelSettings(isVisible: true),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                         // Bar chart
-//                         Container(
-//                           child: SfCartesianChart(
-//                             primaryXAxis: CategoryAxis(),
-//                             title: ChartTitle(text: 'Bar Chart'),
-//                             legend: Legend(isVisible: true),
-//                             tooltipBehavior: TooltipBehavior(enable: true),
-//                             series: <CartesianSeries<_SalesData, String>>[
-//                               BarSeries<_SalesData, String>(
-//                                 dataSource: data,
-//                                 xValueMapper: (_SalesData sales, _) => sales.date,
-//                                 yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                                 name: 'Chiffre d\'affaire',
-//                                 dataLabelSettings: DataLabelSettings(isVisible: true),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//     );
-//   }
-// }
-
-// class _SalesData {
-//   _SalesData(this.date, this.chiffreAffaire);
-
-//   final String date;
-//   final double chiffreAffaire;
-// }
-
-
-
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
-// import 'package:syncfusion_flutter_charts/charts.dart';
-
-// class Page2 extends StatefulWidget {
-//   // ignore: prefer_const_constructors_in_immutables
 //   Page2({Key? key}) : super(key: key);
 
 //   @override
@@ -258,333 +13,306 @@
 // class Page2State extends State<Page2> {
 //   List<_SalesData> data = [];
 //   List<String> dateList = [];
-//   String selectedDate = ''; // Track the selected date
+//   List<String> selectedDates = [];
+//   List<String> offerNames = [];
+//   List<String> selectedOfferNames = [];
+//   List<String> entityNames = [];
+//   List<String> selectedEntityNames = [];
 //   bool loading = true;
 
 //   @override
 //   void initState() {
 //     super.initState();
-//     fetchData("assets/event.json"); // Replace with the correct path to your JSON file
+//     fetchData();
 //   }
 
-//   Future<void> fetchData(String jsonFileName) async {
+//   Future<void> fetchData() async {
 //     try {
-//       // Load JSON content from the file
-//       String jsonString = await rootBundle.loadString(jsonFileName);
+//       ApiService apiService = ApiService();
+//       List<dynamic> fetchedData = await apiService.fetchData();
 
-//       // Parse the JSON data
-//       final jsonData = json.decode(jsonString);
-
-//       // Process your data and create _SalesData objects
-//       data = jsonData.map<_SalesData>((chartData) {
-//         String date = chartData['date'] ?? '';
-//         double chiffreAffaire = chartData["chiffreAffaire"] != null
-//             ? double.parse(chartData["chiffreAffaire"])
-//             : 0.0;
+//       data = fetchedData.map<_SalesData>((item) {
 //         return _SalesData(
-//           date,
-//           chiffreAffaire,
+//           item['activation_date'],
+//           item['tmcode'],
+//           item['offer_name'],
+//           item['entity_type_name'],
+//           item['entity_name'],
+//           item['seller_id'],
+//           item['nb_count'],
 //         );
 //       }).toList();
 
-//       // Extract the list of unique dates
-//       dateList = data.map((salesData) => salesData.date).toSet().toList();
+//       dateList = data.map((salesData) => salesData.activationDate).toSet().toList();
+//       offerNames = data.map((salesData) => salesData.offerName).toSet().toList();
+//       entityNames = data.map((salesData) => salesData.entityName).toSet().toList();
 
 //       setState(() {
 //         loading = false;
-//         selectedDate = ''; // Set the initial selected date to an empty string
+//         selectedDates = [];
+//         selectedOfferNames = [];
+//         selectedEntityNames = [];
 //       });
 //     } catch (e) {
-//       // Handle errors
 //       print("Error loading/processing data: $e");
 //     }
+//   }
+
+//   List<_SalesData> getFilteredData() {
+//     return data.where((d) {
+//       bool dateCondition = selectedDates.isEmpty || selectedDates.contains(d.activationDate);
+//       bool offerCondition = selectedOfferNames.isEmpty || selectedOfferNames.contains(d.offerName);
+//       bool entityCondition = selectedEntityNames.isEmpty || selectedEntityNames.contains(d.entityName);
+//       return dateCondition && offerCondition && entityCondition;
+//     }).toList();
+//   }
+
+//   List<_SalesData> getTop5Data(List<_SalesData> list, double Function(_SalesData) getValue) {
+//     list.sort((a, b) => getValue(b).compareTo(getValue(a)));
+//     return list.take(5).toList();
 //   }
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('Syncfusion Flutter chart'),
-//       ),
-//       body: loading
-//           ? Center(child: CircularProgressIndicator())
-//           : DefaultTabController(
-//               length: 2,
-//               child: Column(
-//                 children: [
-//                   TabBar(
-//                     tabs: [
-//                       Tab(text: 'Line Chart'),
-//                       Tab(text: 'Bar Chart'),
-//                     ],
-//                   ),
-//                   Expanded(
-//                     child: TabBarView(
-//                       children: [
-//                         // Line chart
-//                         Container(
-//                           child: SfCartesianChart(
-//                             primaryXAxis: CategoryAxis(),
-//                             title: ChartTitle(text: 'Chiffre d\'affaire analysis'),
-//                             legend: Legend(isVisible: true),
-//                             tooltipBehavior: TooltipBehavior(enable: true),
-//                             series: <CartesianSeries<_SalesData, String>>[
-//                               LineSeries<_SalesData, String>(
-//                                 dataSource: data,
-//                                 xValueMapper: (_SalesData sales, _) => sales.date,
-//                                 yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                                 name: 'Chiffre d\'affaire',
-//                                 dataLabelSettings: DataLabelSettings(isVisible: true),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                         // Bar chart
-//                         Container(
-//                           child: Column(
-//                             children: [
-//                               // Swipeable buttons containing dates
-//                               Container(
-//                                 height: 50,
-//                                 child: ListView.builder(
-//                                   scrollDirection: Axis.horizontal,
-//                                   itemCount: dateList.length,
-//                                   itemBuilder: (context, index) {
-//                                     return Padding(
-//                                       padding: const EdgeInsets.all(8.0),
-//                                       child: ElevatedButton(
-//                                         onPressed: () {
-//                                           setState(() {
-//                                             if (selectedDate == dateList[index]) {
-//                                               // Toggle off the selected state
-//                                               selectedDate = '';
-//                                             } else {
-//                                               // Toggle on the selected state
-//                                               selectedDate = dateList[index];
-//                                             }
-//                                           });
-//                                         },
-//                                         style: ElevatedButton.styleFrom(
-//                                           primary: selectedDate == dateList[index]
-//                                               ? Colors.blue // Highlight the selected button
-//                                               : null,
-//                                         ),
-//                                         child: Text(dateList[index]),
-//                                       ),
-//                                     );
-//                                   },
-//                                 ),
-//                               ),
-//                               // Bar chart with selected date
-//                               SfCartesianChart(
-//                                 primaryXAxis: CategoryAxis(),
-//                                 title: ChartTitle(
-//                                   text: selectedDate.isEmpty
-//                                       ? 'Bar Chart for all dates'
-//                                       : 'Bar Chart for $selectedDate',
-//                                 ),
-//                                 legend: Legend(isVisible: true),
-//                                 tooltipBehavior: TooltipBehavior(enable: true),
-//                                 series: <CartesianSeries<_SalesData, String>>[
-//                                   BarSeries<_SalesData, String>(
-//                                     dataSource: selectedDate.isEmpty
-//                                         ? data
-//                                         : data.where((d) => d.date == selectedDate).toList(),
-//                                     xValueMapper: (_SalesData sales, _) => sales.date,
-//                                     yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                                     name: 'Chiffre d\'affaire',
-//                                     dataLabelSettings: DataLabelSettings(isVisible: true),
-//                                   ),
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//     );
-//   }
-// }
-
-// class _SalesData {
-//   _SalesData(this.date, this.chiffreAffaire);
-
-//   final String date;
-//   final double chiffreAffaire;
-// }
-
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
-// import 'package:syncfusion_flutter_charts/charts.dart';
-
-// class Page2 extends StatefulWidget {
-//   // ignore: prefer_const_constructors_in_immutables
-//   Page2({Key? key}) : super(key: key);
-
-//   @override
-//   Page2State createState() => Page2State();
-// }
-
-// class Page2State extends State<Page2> {
-//   List<_SalesData> data = [];
-//   List<String> dateList = [];
-//   String selectedDate = ''; // Track the selected date
-//   bool loading = true;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData("assets/event.json"); // Replace with the correct path to your JSON file
-//   }
-
-//   Future<void> fetchData(String jsonFileName) async {
-//     try {
-//       // Load JSON content from the file
-//       String jsonString = await rootBundle.loadString(jsonFileName);
-
-//       // Parse the JSON data
-//       final jsonData = json.decode(jsonString);
-
-//       // Process your data and create _SalesData objects
-//       data = jsonData.map<_SalesData>((chartData) {
-//         String date = chartData['date'] ?? '';
-//         double chiffreAffaire = chartData["chiffreAffaire"] != null
-//             ? double.parse(chartData["chiffreAffaire"])
-//             : 0.0;
-//         return _SalesData(
-//           date,
-//           chiffreAffaire,
-//         );
-//       }).toList();
-
-//       // Extract the list of unique dates
-//       dateList = data.map((salesData) => salesData.date).toSet().toList();
-
-//       setState(() {
-//         loading = false;
-//         selectedDate = ''; // Set the initial selected date to an empty string
-//       });
-//     } catch (e) {
-//       // Handle errors
-//       print("Error loading/processing data: $e");
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(
+//         title: const Text(
 //           'KPIs',
 //           style: TextStyle(
 //             fontWeight: FontWeight.bold,
 //           ),
 //         ),
 //       ),
-//       body: loading
-//           ? Center(child: CircularProgressIndicator())
-//           : DefaultTabController(
-//               length: 2,
-//               child: Column(
-//                 children: [
-//                   TabBar(
-//                     tabs: [
-//                       Tab(text: 'Line Chart'),
-//                       Tab(text: 'Bar Chart'),
+//      body: loading
+//           ? const Center(child: CircularProgressIndicator())
+//           : Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 // Dates filter
+//                 Container(
+//                   padding: EdgeInsets.all(8.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.stretch,
+//                     children: [
+//                       Text(
+//                         'Dates:',
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: Colors.black,
+//                         ),
+//                       ),
+//                       SizedBox(height: 8.0),
+//                       SingleChildScrollView(
+//                         scrollDirection: Axis.horizontal,
+//                         child: Row(
+//                           children: dateList.map((date) {
+//                             bool isSelected = selectedDates.contains(date);
+//                             return Padding(
+//                               padding: const EdgeInsets.symmetric(horizontal: 4.0),
+//                               child: ElevatedButton(
+//                                 onPressed: () {
+//                                   setState(() {
+//                                     if (isSelected) {
+//                                       selectedDates.remove(date);
+//                                     } else {
+//                                       selectedDates.add(date);
+//                                     }
+//                                   });
+//                                 },
+//                                 style: ElevatedButton.styleFrom(
+//                                   primary: isSelected ? Colors.black : null,
+//                                 ),
+//                                 child: Text(
+//                                   date,
+//                                   style: TextStyle(
+//                                     color: isSelected ? Colors.white : Colors.black,
+//                                     fontWeight: FontWeight.bold,
+//                                   ),
+//                                 ),
+//                               ),
+//                             );
+//                           }).toList(),
+//                         ),
+//                       ),
 //                     ],
 //                   ),
-//                   Expanded(
-//                     child: TabBarView(
+//                 ),
+//                 // Offers filter
+//                 Container(
+//                   padding: EdgeInsets.all(8.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.stretch,
+//                     children: [
+//                       Text(
+//                         'Offers:',
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: Colors.black,
+//                         ),
+//                       ),
+//                       SizedBox(height: 8.0),
+//                       SingleChildScrollView(
+//                         scrollDirection: Axis.horizontal,
+//                         child: Row(
+//                           children: offerNames.map((offer) {
+//                             bool isSelected = selectedOfferNames.contains(offer);
+//                             return Padding(
+//                               padding: const EdgeInsets.symmetric(horizontal: 4.0),
+//                               child: ElevatedButton(
+//                                 onPressed: () {
+//                                   setState(() {
+//                                     if (isSelected) {
+//                                       selectedOfferNames.remove(offer);
+//                                     } else {
+//                                       selectedOfferNames.add(offer);
+//                                     }
+//                                   });
+//                                 },
+//                                 style: ElevatedButton.styleFrom(
+//                                   primary: isSelected ? Colors.black : null,
+//                                 ),
+//                                 child: Text(
+//                                   offer,
+//                                   style: TextStyle(
+//                                     color: isSelected ? Colors.white : Colors.black,
+//                                     fontWeight: FontWeight.bold,
+//                                   ),
+//                                 ),
+//                               ),
+//                             );
+//                           }).toList(),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 // Entity name filter
+//                 Container(
+//                   padding: EdgeInsets.all(8.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.stretch,
+//                     children: [
+//                       Text(
+//                         'Entity name:',
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.bold,
+//                           color: Colors.black,
+//                         ),
+//                       ),
+//                       SizedBox(height: 8.0),
+//                       SingleChildScrollView(
+//                         scrollDirection: Axis.horizontal,
+//                         child: Row(
+//                           children: entityNames.map((entity) {
+//                             bool isSelected = selectedEntityNames.contains(entity);
+//                             return Padding(
+//                               padding: const EdgeInsets.symmetric(horizontal: 4.0),
+//                               child: ElevatedButton(
+//                                 onPressed: () {
+//                                   setState(() {
+//                                     if (isSelected) {
+//                                       selectedEntityNames.remove(entity);
+//                                     } else {
+//                                       selectedEntityNames.add(entity);
+//                                     }
+//                                   });
+//                                 },
+//                                 style: ElevatedButton.styleFrom(
+//                                   primary: isSelected ? Colors.black : null,
+//                                 ),
+//                                 child: Text(
+//                                   entity,
+//                                   style: TextStyle(
+//                                     color: isSelected ? Colors.white : Colors.black,
+//                                     fontWeight: FontWeight.bold,
+//                                   ),
+//                                 ),
+//                               ),
+//                             );
+//                           }).toList(),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 // Charts
+//                 Expanded(
+//                   child: SingleChildScrollView(
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.stretch,
 //                       children: [
-//                         // Line chart
+//                         // Bar chart based on selected dates and selected offer names
 //                         Container(
+//                           height: 300,
+//                           padding: const EdgeInsets.all(8.0),
 //                           child: SfCartesianChart(
 //                             primaryXAxis: CategoryAxis(),
-//                             title: ChartTitle(text: 'Chiffre d\'affaire analysis'),
+//                             title: ChartTitle(
+//                               text: selectedDates.isEmpty
+//                                   ? 'Offer count by Seller'
+//                                   : 'Bar Chart for ${selectedDates.join(", ")}',
+//                             ),
+//                             legend: Legend(isVisible: true),
+//                             tooltipBehavior: TooltipBehavior(enable: true),
+//                             series: <CartesianSeries<_SalesData, String>>[
+//                               BarSeries<_SalesData, String>(
+//                                 color: Color.fromARGB(223, 255, 115, 34),
+//                                 dataSource: getFilteredData().where((d) => selectedOfferNames.isEmpty || selectedOfferNames.contains(d.offerName)).toList(),
+//                                 xValueMapper: (_SalesData sales, _) => sales.sellerId,
+//                                 yValueMapper: (_SalesData sales, _) => sales.nbCount.toDouble(),
+//                                 name: 'Offer Count',
+//                                 dataLabelSettings: DataLabelSettings(isVisible: true),
+//                                 pointColorMapper: (_SalesData sales, _) {
+//                                   double maxVal = selectedDates.isEmpty
+//                                       ? data.map((d) => d.nbCount.toDouble()).reduce((a, b) => a > b ? a : b)
+//                                       : data.where((d) => selectedDates.contains(d.activationDate)).map((d) => d.nbCount.toDouble()).reduce((a, b) => a > b ? a : b);
+
+//                                   return sales.nbCount.toDouble() == maxVal ? Colors.red : Color.fromARGB(223, 255, 115, 34);
+//                                 },
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         // Line chart
+//                         Container(
+//                           padding: const EdgeInsets.all(8.0),
+//                           child: SfCartesianChart(
+//                             primaryXAxis: CategoryAxis(),
+//                             title: ChartTitle(text: 'Offer count by Seller'),
 //                             legend: Legend(isVisible: true),
 //                             tooltipBehavior: TooltipBehavior(enable: true),
 //                             series: <CartesianSeries<_SalesData, String>>[
 //                               LineSeries<_SalesData, String>(
-//                                 dataSource: data,
-//                                 xValueMapper: (_SalesData sales, _) => sales.date,
-//                                 yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                                 name: 'Chiffre d\'affaire',
+//                                 dataSource: getFilteredData(),
+//                                 xValueMapper: (_SalesData sales, _) => sales.sellerId,
+//                                 yValueMapper: (_SalesData sales, _) => sales.nbCount.toDouble(),
+//                                 name: 'Offer Name Count',
 //                                 dataLabelSettings: DataLabelSettings(isVisible: true),
 //                               ),
 //                             ],
 //                           ),
 //                         ),
-//                         // Bar chart
+//                         // Another bar chart based on selected dates and selected entity names
 //                         Container(
-//                           child: Column(
-//                             children: [
-//                               // Swipeable buttons containing dates
-//                               Container(
-//                                 height: 50,
-//                                 child: ListView.builder(
-//                                   scrollDirection: Axis.horizontal,
-//                                   itemCount: dateList.length,
-//                                   itemBuilder: (context, index) {
-//                                     return Padding(
-//                                       padding: const EdgeInsets.all(8.0),
-//                                       child: ElevatedButton(
-//                                         onPressed: () {
-//                                           setState(() {
-//                                             if (selectedDate == dateList[index]) {
-//                                               // Toggle off the selected state
-//                                               selectedDate = '';
-//                                             } else {
-//                                               // Toggle on the selected state
-//                                               selectedDate = dateList[index];
-//                                             }
-//                                           });
-//                                         },
-//                                         style: ElevatedButton.styleFrom(
-//                                           primary: selectedDate == dateList[index]
-//                                               ? Colors.black // Highlight the selected button
-//                                               : null,
-//                                         ),
-//                                         child: Text(
-//                                           dateList[index],
-//                                           style: TextStyle(
-//                                             color: selectedDate == dateList[index]
-//                                                 ? Colors.white // Color of the pressed button text
-//                                                 : Colors.black, // Color of the button text
-//                                             fontWeight: FontWeight.bold,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     );
-//                                   },
-//                                 ),
-//                               ),
-//                               // Bar chart with selected date
-//                               SfCartesianChart(
-//                                 primaryXAxis: CategoryAxis(),
-//                                 title: ChartTitle(
-//                                   text: selectedDate.isEmpty
-//                                       ? 'Bar Chart for all dates'
-//                                       : 'Bar Chart for $selectedDate',
-//                                 ),
-//                                 legend: Legend(isVisible: true),
-//                                 tooltipBehavior: TooltipBehavior(enable: true),
-//                                 series: <CartesianSeries<_SalesData, String>>[
-//                                   BarSeries<_SalesData, String>(
-//                                     color: Color.fromARGB(223, 255, 115, 34), // Customize the color of the bars
-//                                     dataSource: selectedDate.isEmpty
-//                                         ? data
-//                                         : data.where((d) => d.date == selectedDate).toList(),
-//                                     xValueMapper: (_SalesData sales, _) => sales.date,
-//                                     yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-//                                     name: 'Chiffre d\'affaire',
-//                                     dataLabelSettings: DataLabelSettings(isVisible: true),
-//                                   ),
-//                                 ],
+//                           height: 300,
+//                           padding: const EdgeInsets.all(8.0),
+//                           child: SfCartesianChart(
+//                             primaryXAxis: CategoryAxis(),
+//                             title: ChartTitle(
+//                               text: selectedDates.isEmpty
+//                                   ? 'Offer count by Entity'
+//                                   : 'Bar Chart for ${selectedDates.join(", ")} by Entity',
+//                             ),
+//                             legend: Legend(isVisible: true),
+//                             tooltipBehavior: TooltipBehavior(enable: true),
+//                             series: <CartesianSeries<_SalesData, String>>[
+//                               BarSeries<_SalesData, String>(
+//                                 color: Color.fromARGB(223, 61, 150, 215), // Adjust color as needed
+//                                 dataSource: getFilteredData().where((d) => selectedEntityNames.isEmpty || selectedEntityNames.contains(d.entityName)).toList(),
+//                                 xValueMapper: (_SalesData sales, _) => sales.entityName,
+//                                 yValueMapper: (_SalesData sales, _) => sales.nbCount.toDouble(),
+//                                 name: 'Offer Count by Entity',
+//                                 dataLabelSettings: DataLabelSettings(isVisible: true),
 //                               ),
 //                             ],
 //                           ),
@@ -592,27 +320,38 @@
 //                       ],
 //                     ),
 //                   ),
-//                 ],
-//               ),
+//                 ),
+//               ],
 //             ),
 //     );
 //   }
 // }
 
 // class _SalesData {
-//   _SalesData(this.date, this.chiffreAffaire);
+//   _SalesData(
+//     this.activationDate,
+//     this.tmcode,
+//     this.offerName,
+//     this.entityTypeName,
+//     this.entityName,
+//     this.sellerId,
+//     this.nbCount,
+//   );
 
-//   final String date;
-//   final double chiffreAffaire;
+//   final String activationDate;
+//   final int tmcode;
+//   final String offerName;
+//   final String entityTypeName;
+//   final String entityName;
+//   final String sellerId;
+//   final int nbCount;
 // }
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:my_dash/services/activation_client_api.dart';
 
 class Page2 extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
   Page2({Key? key}) : super(key: key);
 
   @override
@@ -622,53 +361,70 @@ class Page2 extends StatefulWidget {
 class Page2State extends State<Page2> {
   List<_SalesData> data = [];
   List<String> dateList = [];
-  String selectedDate = ''; // Track the selected date
+  List<String> selectedDates = [];
+  List<String> offerNames = [];
+  List<String> selectedOfferNames = [];
+  List<String> entityNames = [];
+  List<String> selectedEntityNames = [];
   bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    fetchData("assets/event.json"); // Replace with the correct path to your JSON file
+    fetchData();
   }
 
-  Future<void> fetchData(String jsonFileName) async {
+  Future<void> fetchData() async {
     try {
-      // Load JSON content from the file
-      String jsonString = await rootBundle.loadString(jsonFileName);
+      ApiService apiService = ApiService();
+      List<dynamic> fetchedData = await apiService.fetchData();
 
-      // Parse the JSON data
-      final jsonData = json.decode(jsonString);
-
-      // Process your data and create _SalesData objects
-      data = jsonData.map<_SalesData>((chartData) {
-        String date = chartData['date'] ?? '';
-        double chiffreAffaire = chartData["chiffreAffaire"] != null
-            ? double.parse(chartData["chiffreAffaire"])
-            : 0.0;
+      data = fetchedData.map<_SalesData>((item) {
         return _SalesData(
-          date,
-          chiffreAffaire,
+          item['activation_date'],
+          item['tmcode'],
+          item['offer_name'],
+          item['entity_type_name'],
+          item['entity_name'],
+          item['seller_id'],
+          item['nb_count'],
         );
       }).toList();
 
-      // Extract the list of unique dates
-      dateList = data.map((salesData) => salesData.date).toSet().toList();
+      dateList = data.map((salesData) => salesData.activationDate).toSet().toList();
+      offerNames = data.map((salesData) => salesData.offerName).toSet().toList();
+      entityNames = data.map((salesData) => salesData.entityName).toSet().toList();
 
       setState(() {
         loading = false;
-        selectedDate = ''; // Set the initial selected date to an empty string
+        selectedDates = [];
+        selectedOfferNames = [];
+        selectedEntityNames = [];
       });
     } catch (e) {
-      // Handle errors
       print("Error loading/processing data: $e");
     }
+  }
+
+  List<_SalesData> getFilteredData() {
+    return data.where((d) {
+      bool dateCondition = selectedDates.isEmpty || selectedDates.contains(d.activationDate);
+      bool offerCondition = selectedOfferNames.isEmpty || selectedOfferNames.contains(d.offerName);
+      bool entityCondition = selectedEntityNames.isEmpty || selectedEntityNames.contains(d.entityName);
+      return dateCondition && offerCondition && entityCondition;
+    }).toList();
+  }
+
+  List<_SalesData> getTop5Data(List<_SalesData> list, double Function(_SalesData) getValue) {
+    list.sort((a, b) => getValue(b).compareTo(getValue(a)));
+    return list.take(5).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'KPIs',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -676,118 +432,259 @@ class Page2State extends State<Page2> {
         ),
       ),
       body: loading
-          ? Center(child: CircularProgressIndicator())
-          : DefaultTabController(
-              length: 2,
-              child: Column(
-                children: [
-                TabBar(
-  indicatorColor: Colors.black, // Customize the color of the selected tab indicator
-  tabs: [
-    Tab(
-      child: Text(
-        'Line Chart',
-        style: TextStyle(color: Colors.black), // Set text color to black
-      ),
-      icon: Icon(Icons.show_chart, color: Colors.black),
-    ),
-    Tab(
-      child: Text(
-        'Bar Chart',
-        style: TextStyle(color: Colors.black), // Set text color to black
-      ),
-      icon: Icon(Icons.bar_chart, color: Colors.black),
-    ),
-  ],
-),
-
-                  Expanded(
-                    child: TabBarView(
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Dates filter
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Dates:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: dateList.map((date) {
+                            bool isSelected = selectedDates.contains(date);
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (isSelected) {
+                                      selectedDates.remove(date);
+                                    } else {
+                                      selectedDates.add(date);
+                                    }
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: isSelected ? Colors.black : null,
+                                ),
+                                child: Text(
+                                  date,
+                                  style: TextStyle(
+                                    color: isSelected ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Offers filter
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Offers:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: offerNames.map((offer) {
+                            bool isSelected = selectedOfferNames.contains(offer);
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (isSelected) {
+                                      selectedOfferNames.remove(offer);
+                                    } else {
+                                      selectedOfferNames.add(offer);
+                                    }
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: isSelected ? Colors.black : null,
+                                ),
+                                child: Text(
+                                  offer,
+                                  style: TextStyle(
+                                    color: isSelected ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Entity name filter
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Entity name:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: entityNames.map((entity) {
+                            bool isSelected = selectedEntityNames.contains(entity);
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (isSelected) {
+                                      selectedEntityNames.remove(entity);
+                                    } else {
+                                      selectedEntityNames.add(entity);
+                                    }
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: isSelected ? Colors.black : null,
+                                ),
+                                child: Text(
+                                  entity,
+                                  style: TextStyle(
+                                    color: isSelected ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Charts
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // Line chart
+                        // Bar chart based on selected dates and selected offer names
                         Container(
+                          height: 300,
+                          padding: const EdgeInsets.all(8.0),
                           child: SfCartesianChart(
                             primaryXAxis: CategoryAxis(),
-                            title: ChartTitle(text: 'Chiffre d\'affaire analysis'),
+                            title: ChartTitle(
+                              text: selectedDates.isEmpty
+                                  ? 'Offer count by Seller'
+                                  : 'Bar Chart for ${selectedDates.join(", ")}',
+                            ),
+                            legend: Legend(isVisible: true),
+                            tooltipBehavior: TooltipBehavior(enable: true),
+                            series: <CartesianSeries<_SalesData, String>>[
+                              BarSeries<_SalesData, String>(
+                                color: Color.fromARGB(223, 255, 115, 34),
+                                dataSource: getFilteredData()
+                                    .where((d) => selectedOfferNames.isEmpty || selectedOfferNames.contains(d.offerName))
+                                    .toList(),
+                                xValueMapper: (_SalesData sales, _) => sales.sellerId,
+                                yValueMapper: (_SalesData sales, _) => sales.nbCount.toDouble(),
+                                name: 'Offer Count',
+                                dataLabelSettings: DataLabelSettings(isVisible: true),
+                                pointColorMapper: (_SalesData sales, _) {
+                                  double maxVal = selectedDates.isEmpty
+                                      ? data.map((d) => d.nbCount.toDouble()).reduce((a, b) => a > b ? a : b)
+                                      : data.where((d) => selectedDates.contains(d.activationDate))
+                                          .map((d) => d.nbCount.toDouble())
+                                          .reduce((a, b) => a > b ? a : b);
+
+                                  return sales.nbCount.toDouble() == maxVal ? Colors.red : Color.fromARGB(223, 255, 115, 34);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Line chart
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            title: ChartTitle(text: 'Offer count by Seller'),
                             legend: Legend(isVisible: true),
                             tooltipBehavior: TooltipBehavior(enable: true),
                             series: <CartesianSeries<_SalesData, String>>[
                               LineSeries<_SalesData, String>(
-                                dataSource: data,
-                                xValueMapper: (_SalesData sales, _) => sales.date,
-                                yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-                                name: 'Chiffre d\'affaire',
+                                dataSource: getFilteredData(),
+                                xValueMapper: (_SalesData sales, _) => sales.sellerId,
+                                yValueMapper: (_SalesData sales, _) => sales.nbCount.toDouble(),
+                                name: 'Offer Name Count',
                                 dataLabelSettings: DataLabelSettings(isVisible: true),
                               ),
                             ],
                           ),
                         ),
-                        // Bar chart
+                        // Another bar chart based on selected dates and selected entity names
                         Container(
-                          child: Column(
-                            children: [
-                              // Swipeable buttons containing dates
-                              Container(
-                                height: 50,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: dateList.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (selectedDate == dateList[index]) {
-                                              // Toggle off the selected state
-                                              selectedDate = '';
-                                            } else {
-                                              // Toggle on the selected state
-                                              selectedDate = dateList[index];
-                                            }
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: selectedDate == dateList[index]
-                                              ? Colors.black // Highlight the selected button
-                                              : null,
-                                        ),
-                                        child: Text(
-                                          dateList[index],
-                                          style: TextStyle(
-                                            color: selectedDate == dateList[index]
-                                                ? Colors.white // Color of the pressed button text
-                                                : Colors.black, // Color of the button text
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
+                          height: 300,
+                          padding: const EdgeInsets.all(8.0),
+                          child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            title: ChartTitle(
+                              text: selectedDates.isEmpty
+                                  ? 'Offer count by Entity'
+                                  : 'Bar Chart for ${selectedDates.join(", ")} by Entity',
+                            ),
+                            legend: Legend(isVisible: true),
+                            tooltipBehavior: TooltipBehavior(enable: true),
+                            series: <CartesianSeries<_SalesData, String>>[
+                              BarSeries<_SalesData, String>(
+                                color: Color.fromARGB(223, 61, 150, 215), // Adjust color as needed
+                                dataSource: getFilteredData()
+                                    .where((d) => selectedEntityNames.isEmpty || selectedEntityNames.contains(d.entityName))
+                                    .toList(),
+                                xValueMapper: (_SalesData sales, _) => sales.entityName,
+                                yValueMapper: (_SalesData sales, _) => sales.nbCount.toDouble(),
+                                name: 'Offer Count by Entity',
+                                dataLabelSettings: DataLabelSettings(isVisible: true),
                               ),
-                              // Bar chart with selected date
-                              SfCartesianChart(
-                                primaryXAxis: CategoryAxis(),
-                                title: ChartTitle(
-                                  text: selectedDate.isEmpty
-                                      ? 'Bar Chart for all dates'
-                                      : 'Bar Chart for $selectedDate',
-                                ),
-                                legend: Legend(isVisible: true),
-                                tooltipBehavior: TooltipBehavior(enable: true),
-                                series: <CartesianSeries<_SalesData, String>>[
-                                  BarSeries<_SalesData, String>(
-                                    color: Color.fromARGB(223, 255, 115, 34), // Customize the color of the bars
-                                    dataSource: selectedDate.isEmpty
-                                        ? data
-                                        : data.where((d) => d.date == selectedDate).toList(),
-                                    xValueMapper: (_SalesData sales, _) => sales.date,
-                                    yValueMapper: (_SalesData sales, _) => sales.chiffreAffaire,
-                                    name: 'Chiffre d\'affaire',
-                                    dataLabelSettings: DataLabelSettings(isVisible: true),
-                                  ),
-                                ],
+                            ],
+                          ),
+                        ),
+                        // Pie chart classifying entity_name by entity_type_name
+                        Container(
+                          height: 300,
+                          padding: const EdgeInsets.all(8.0),
+                          child: SfCircularChart(
+                            title: ChartTitle(text: 'Entity Classification by Type'),
+                            legend: Legend(isVisible: true),
+                            series: <CircularSeries<_SalesData, String>>[
+                              PieSeries<_SalesData, String>(
+                                dataSource: getEntityTypeSummary(),
+                                xValueMapper: (_SalesData data, _) => data.entityTypeName,
+                                yValueMapper: (_SalesData data, _) => data.nbCount.toDouble(),
+                                dataLabelMapper: (_SalesData data, _) => data.entityTypeName,
+                                dataLabelSettings: DataLabelSettings(isVisible: true),
                               ),
                             ],
                           ),
@@ -795,16 +692,43 @@ class Page2State extends State<Page2> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
     );
+  }
+
+  List<_SalesData> getEntityTypeSummary() {
+    Map<String, int> entityTypeCounts = {};
+    for (var entry in data) {
+      entityTypeCounts.update(entry.entityTypeName, (value) => value + entry.nbCount, ifAbsent: () => entry.nbCount);
+    }
+    return entityTypeCounts.entries
+        .map((entry) => _SalesData('', 0, '', entry.key, '', '', entry.value))
+        .toList();
   }
 }
 
 class _SalesData {
-  _SalesData(this.date, this.chiffreAffaire);
+  _SalesData(
+    this.activationDate,
+    this.tmcode,
+    this.offerName,
+    this.entityTypeName,
+    this.entityName,
+    this.sellerId,
+    this.nbCount,
+  );
 
-  final String date;
-  final double chiffreAffaire;
+  final String activationDate;
+  final int tmcode;
+  final String offerName;
+  final String entityTypeName;
+  final String entityName;
+  final String sellerId;
+  final int nbCount;
 }
+
+
+
+
