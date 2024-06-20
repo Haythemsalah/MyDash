@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:my_dash/services/activation_client_api.dart';
-import 'package:my_dash/Authentification/Authentification.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Page2 extends StatefulWidget {
   Page2({Key? key}) : super(key: key);
 
@@ -19,10 +19,17 @@ class Page2State extends State<Page2> {
   List<String> entityNames = [];
   List<String> selectedEntityNames = [];
   bool loading = true;
+  String userRole = '';
 
   @override
   void initState() {
     super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userRole = prefs.getString('userRole') ?? '';
     fetchData();
   }
 
@@ -62,7 +69,7 @@ class Page2State extends State<Page2> {
     return data.where((d) {
       bool dateCondition = selectedDates.isEmpty || selectedDates.contains(d.activationDate);
       bool offerCondition = selectedOfferNames.isEmpty || selectedOfferNames.contains(d.offerName);
-      bool entityCondition = selectedEntityNames.isEmpty || selectedEntityNames.contains(d.entityName);
+      bool entityCondition = userRole == 'full' || d.entityName == 'Franchise Mourouj 4';
       return dateCondition && offerCondition && entityCondition;
     }).toList();
   }
@@ -73,120 +80,121 @@ class Page2State extends State<Page2> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'KPIs',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text(
+        'KPIs',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
         ),
       ),
-      body: loading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Dates filter
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Dates:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+    ),
+    body: loading
+        ? const Center(child: CircularProgressIndicator())
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Dates filter (unchanged)
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Dates:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
-                      SizedBox(height: 8.0),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: dateList.map((date) {
-                            bool isSelected = selectedDates.contains(date);
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (isSelected) {
-                                      selectedDates.remove(date);
-                                    } else {
-                                      selectedDates.add(date);
-                                    }
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: isSelected ? Colors.black : null,
-                                ),
-                                child: Text(
-                                  date,
-                                  style: TextStyle(
-                                    color: isSelected ? Colors.white : Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                    ),
+                    SizedBox(height: 8.0),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: dateList.map((date) {
+                          bool isSelected = selectedDates.contains(date);
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (isSelected) {
+                                    selectedDates.remove(date);
+                                  } else {
+                                    selectedDates.add(date);
+                                  }
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: isSelected ? Colors.black : null,
+                              ),
+                              child: Text(
+                                date,
+                                style: TextStyle(
+                                  color: isSelected ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          }).toList(),
-                        ),
+                            ),
+                          );
+                        }).toList(),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                // Offers filter
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Offers:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+              ),
+              // Offers filter (unchanged)
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Offers:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
-                      SizedBox(height: 8.0),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: offerNames.map((offer) {
-                            bool isSelected = selectedOfferNames.contains(offer);
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (isSelected) {
-                                      selectedOfferNames.remove(offer);
-                                    } else {
-                                      selectedOfferNames.add(offer);
-                                    }
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: isSelected ? Colors.black : null,
-                                ),
-                                child: Text(
-                                  offer,
-                                  style: TextStyle(
-                                    color: isSelected ? Colors.white : Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                    ),
+                    SizedBox(height: 8.0),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: offerNames.map((offer) {
+                          bool isSelected = selectedOfferNames.contains(offer);
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (isSelected) {
+                                    selectedOfferNames.remove(offer);
+                                  } else {
+                                    selectedOfferNames.add(offer);
+                                  }
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: isSelected ? Colors.black : null,
+                              ),
+                              child: Text(
+                                offer,
+                                style: TextStyle(
+                                  color: isSelected ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          }).toList(),
-                        ),
+                            ),
+                          );
+                        }).toList(),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                // Entity name filter
+              ),
+              // Entity name filter (conditionally shown)
+              if (userRole != 'restricted')
                 Container(
                   padding: EdgeInsets.all(8.0),
                   child: Column(
@@ -380,6 +388,3 @@ class _SalesData {
   final String sellerId;
   final int nbCount;
 }
-
-
-
