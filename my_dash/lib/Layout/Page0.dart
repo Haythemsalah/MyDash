@@ -525,12 +525,146 @@
 //     );
 //   }
 // }
+
+
+// import 'package:flutter/material.dart';
+// import 'package:my_dash/Naviguation%20menu/PageMenu.dart';
+// import 'package:my_dash/Layout/Pagefromswipe0.dart';
+// import 'package:my_dash/Layout/Pagefromswipe1.dart';
+// import 'package:my_dash/Layout/Pagefromswipe2.dart';
+// import 'package:provider/provider.dart';
+
+// class Page0 extends StatefulWidget {
+//   const Page0({Key? key}) : super(key: key);
+
+//   @override
+//   Page0State createState() => Page0State();
+// }
+
+// class Page0State extends State<Page0> {
+//   List<String> options = [
+//     'Recharge',
+//     'Achat option',
+//     'Promos',
+//     'Bons plans',
+//     'Transfert internet',
+//     'Transfert crédit',
+//     'Dates',
+//     'E-Shop',
+//     'Roue de la chance',
+//     'Services',
+//     'Paiement de facture',
+//   ];
+
+//   int selectedOptionIndex = -1; // Initialize with a default value
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final themeProvider = Provider.of<ThemeProvider>(context);
+
+//     return Card(
+//       elevation: 0.0,
+//       margin: const EdgeInsets.all(5),
+//       clipBehavior: Clip.antiAliasWithSaveLayer,
+//       color: themeProvider.isDarkMode ? Color.fromARGB(255, 15, 19, 21) : Colors.white,
+//       child: Padding(
+//         padding: const EdgeInsets.all(5.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Content(
+//               child: SingleChildScrollView(
+//                 scrollDirection: Axis.horizontal,
+//                 child: Row(
+//                   children: options.map((String option) {
+//                     return Container(
+//                       margin: const EdgeInsets.only(right: 8.0),
+//                       child: ChoiceChip(
+//                         label: Text(
+//                           option,
+//                           style: TextStyle(
+//                             color: selectedOptionIndex == options.indexOf(option)
+//                                 ? Colors.white
+//                                 : Colors.black,
+//                           ),
+//                         ),
+//                         selected: selectedOptionIndex == options.indexOf(option),
+//                         onSelected: (bool selected) {
+//                           setState(() {
+//                             selectedOptionIndex = selected ? options.indexOf(option) : -1;
+//                           });
+//                         },
+//                         selectedColor: themeProvider.isDarkMode ? const Color.fromARGB(223, 255, 115, 34) : Colors.black,
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(20.0),
+//                         ),
+//                       ),
+//                     );
+//                   }).toList(),
+//                 ),
+//               ),
+//             ),
+//             selectedOptionIndex != -1
+//                 ? buildContentForSelectedOption(options[selectedOptionIndex])
+//                 : Container(),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget buildContentForSelectedOption(String selectedOption) {
+//     switch (selectedOption) {
+//       case 'Recharge':
+//         return Pagefromswipe0();
+//       case 'Achat option':
+//         return Pagefromswipe1();
+//       case 'Promos':
+//         return Pagefromswipe2();
+//       // Add cases for other options as needed
+//       default:
+//         return DefaultPageContent();
+//     }
+//   }
+// }
+
+
+// class DefaultPageContent extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Text('Default Content - Unknown Option'),
+//     );
+//   }
+// }
+
+// class Content extends StatelessWidget {
+//   final Widget child;
+
+//   const Content({
+//     Key? key,
+//     required this.child,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: child,
+//     );
+//   }
+// }
+
+
+
 import 'package:flutter/material.dart';
 import 'package:my_dash/Naviguation%20menu/PageMenu.dart';
 import 'package:my_dash/Layout/Pagefromswipe0.dart';
 import 'package:my_dash/Layout/Pagefromswipe1.dart';
 import 'package:my_dash/Layout/Pagefromswipe2.dart';
+import 'package:my_dash/services/activation_client_api.dart';
 import 'package:provider/provider.dart';
+import 'package:my_dash/Layout/PageChartDetailedPerf.dart';  // Import PageChartDetailedPerf
 
 class Page0 extends StatefulWidget {
   const Page0({Key? key}) : super(key: key);
@@ -555,6 +689,32 @@ class Page0State extends State<Page0> {
   ];
 
   int selectedOptionIndex = -1; // Initialize with a default value
+  bool loading = true;
+  List<dynamic> topEntities = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTopEntities();
+  }
+
+  Future<void> fetchTopEntities() async {
+    try {
+      ApiService apiService = ApiService();
+      List<dynamic> fetchedData = await apiService.fetchKpi();
+      // Sort the fetchedData by nbr_activation in descending order
+      fetchedData.sort((a, b) => b['nbr_activation'].compareTo(a['nbr_activation']));
+      setState(() {
+        topEntities = fetchedData.take(5).toList();
+        loading = false;
+      });
+    } catch (e) {
+      print("Error fetching top entities: $e");
+      setState(() {
+        loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -567,45 +727,124 @@ class Page0State extends State<Page0> {
       color: themeProvider.isDarkMode ? Color.fromARGB(255, 15, 19, 21) : Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Content(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: options.map((String option) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 8.0),
-                      child: ChoiceChip(
-                        label: Text(
-                          option,
-                          style: TextStyle(
-                            color: selectedOptionIndex == options.indexOf(option)
-                                ? Colors.white
-                                : Colors.black,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Content(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: options.map((String option) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 8.0),
+                        child: ChoiceChip(
+                          label: Text(
+                            option,
+                            style: TextStyle(
+                              color: selectedOptionIndex == options.indexOf(option)
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                          selected: selectedOptionIndex == options.indexOf(option),
+                          onSelected: (bool selected) {
+                            setState(() {
+                              selectedOptionIndex = selected ? options.indexOf(option) : -1;
+                            });
+                          },
+                          selectedColor: themeProvider.isDarkMode ? const Color.fromARGB(223, 255, 115, 34) : Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        selected: selectedOptionIndex == options.indexOf(option),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            selectedOptionIndex = selected ? options.indexOf(option) : -1;
-                          });
-                        },
-                        selectedColor: themeProvider.isDarkMode ? const Color.fromARGB(223, 255, 115, 34) : Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
-            ),
-            selectedOptionIndex != -1
-                ? buildContentForSelectedOption(options[selectedOptionIndex])
-                : Container(),
-          ],
+              selectedOptionIndex != -1
+                  ? buildContentForSelectedOption(options[selectedOptionIndex])
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20.0),
+                        Text(
+                          'Top 5 Activations',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        loading
+                            ? Center(child: CircularProgressIndicator())
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: topEntities.asMap().entries.map((entry) {
+                                  int idx = entry.key;
+                                  var entity = entry.value;
+                                  return Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 5.0),
+                                    padding: const EdgeInsets.all(10.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: idx == 0 ? Color.fromARGB(223, 255, 115, 34) : Colors.grey[400],
+                                          child: Text('${idx + 1}', style: TextStyle(color: Colors.white)),
+                                        ),
+                                        SizedBox(width: 10.0),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                entity['entity_name'],
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16.0,
+                                                ),
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Text('Nbr Activation: ${entity['nbr_activation']}'),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.0), // Adjust the width as needed
+                                        GestureDetector(
+                                          onTap: () {
+                                            // Navigate to PageChartDetailedPerf when the arrow is tapped
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => PageChartDetailedPerf()),
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.arrow_forward,
+                                                size: 30.0, // Increase the size of the arrow
+                                                color: Color.fromARGB(223, 255, 115, 34),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                      ],
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -625,7 +864,6 @@ class Page0State extends State<Page0> {
     }
   }
 }
-
 
 class DefaultPageContent extends StatelessWidget {
   @override
@@ -653,8 +891,26 @@ class Content extends StatelessWidget {
   }
 }
 
+class BlankPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Blank Page'),
+      ),
+      body: Center(
+        child: Text('This is a blank page.'),
+      ),
+    );
+  }
+}
 
-// ... Add more page classes as needed
+
+
+
+
+
+
 
 
 
