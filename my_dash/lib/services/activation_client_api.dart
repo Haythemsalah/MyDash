@@ -170,47 +170,92 @@
 //     }
 //   }
 // }
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+
+// class ApiService {
+//   final String baseUrl = "https://client-data-pwya.onrender.com";
+
+//   // GET request for get-data
+//   Future<List<dynamic>> fetchData() async {
+//     final response = await http.get(Uri.parse('$baseUrl/get-data'));
+
+//     if (response.statusCode == 200) {
+//       // Extract the list from the parent object
+//       final Map<String, dynamic> responseData = jsonDecode(response.body);
+//       return responseData['data'];
+//     } else {
+//       throw Exception('Failed to load data');
+//     }
+//   }
+
+//   // GET request for get_evolution
+//   Future<List<dynamic>> fetchEvolution() async {
+//     final response = await http.get(Uri.parse('$baseUrl/get_evolution'));
+
+//     if (response.statusCode == 200) {
+//       // Extract the list from the parent object
+//       final Map<String, dynamic> responseData = jsonDecode(response.body);
+//       return responseData['evolution'];
+//     } else {
+//       throw Exception('Failed to load evolution data');
+//     }
+//   }
+
+//   // GET request for calculate_kpi
+//   Future<List<dynamic>> 
+//   fetchKpi() async {
+//     final response = await http.get(Uri.parse('$baseUrl/calculate_kpi'));
+
+//     if (response.statusCode == 200) {
+//       // Extract the list from the parent object
+//       final Map<String, dynamic> responseData = jsonDecode(response.body);
+//       return responseData['best_sellers'];
+//     } else {
+//       throw Exception('Failed to load KPI data');
+//     }
+//   }
+// }
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
   final String baseUrl = "https://client-data-pwya.onrender.com";
 
-  // GET request for get-data
   Future<List<dynamic>> fetchData() async {
     final response = await http.get(Uri.parse('$baseUrl/get-data'));
 
     if (response.statusCode == 200) {
-      // Extract the list from the parent object
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return responseData['data'];
+      final responseData = jsonDecode(response.body);
+      return responseData is List
+          ? responseData
+          : responseData['data'];
     } else {
       throw Exception('Failed to load data');
     }
   }
 
-  // GET request for get_evolution
   Future<List<dynamic>> fetchEvolution() async {
     final response = await http.get(Uri.parse('$baseUrl/get_evolution'));
 
     if (response.statusCode == 200) {
-      // Extract the list from the parent object
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return responseData['evolution'];
+      final responseData = jsonDecode(response.body);
+      return responseData is List
+          ? responseData
+          : responseData['evolution'];
     } else {
       throw Exception('Failed to load evolution data');
     }
   }
 
-  // GET request for calculate_kpi
-  Future<List<dynamic>> 
-  fetchKpi() async {
+  Future<List<dynamic>> fetchKpi() async {
     final response = await http.get(Uri.parse('$baseUrl/calculate_kpi'));
 
     if (response.statusCode == 200) {
-      // Extract the list from the parent object
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return responseData['best_sellers'];
+      final responseData = jsonDecode(response.body);
+      return responseData is List
+          ? responseData
+          : responseData['best_sellers'];
     } else {
       throw Exception('Failed to load KPI data');
     }

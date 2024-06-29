@@ -656,7 +656,6 @@
 // }
 
 
-
 import 'package:flutter/material.dart';
 import 'package:my_dash/Naviguation%20menu/PageMenu.dart';
 import 'package:my_dash/Layout/Pagefromswipe0.dart';
@@ -690,26 +689,48 @@ class Page0State extends State<Page0> {
 
   int selectedOptionIndex = -1; // Initialize with a default value
   bool loading = true;
-  List<dynamic> topEntities = [];
+  List<Map<String, dynamic>> aggregatedEntities = [];
 
   @override
   void initState() {
     super.initState();
-    fetchTopEntities();
+    fetchEntities();
   }
 
-  Future<void> fetchTopEntities() async {
+  Future<void> fetchEntities() async {
     try {
       ApiService apiService = ApiService();
-      List<dynamic> fetchedData = await apiService.fetchKpi();
-      // Sort the fetchedData by nbr_activation in descending order
-      fetchedData.sort((a, b) => b['nbr_activation'].compareTo(a['nbr_activation']));
+      List<dynamic> fetchedData = await apiService.fetchData();
+
+      // Aggregate the data by entity_name
+      Map<String, int> entityMap = {};
+      for (var entity in fetchedData) {
+        String entityName = entity['entity_name'] ?? 'Unknown';
+        int nbrTransaction = entity['nbr_transaction'] ?? 0;
+        if (entityMap.containsKey(entityName)) {
+          entityMap[entityName] = entityMap[entityName]! + nbrTransaction;
+        } else {
+          entityMap[entityName] = nbrTransaction;
+        }
+      }
+
+      // Convert the map back to a list of maps
+      List<Map<String, dynamic>> aggregatedList = entityMap.entries.map((entry) {
+        return {
+          'entity_name': entry.key,
+          'nbr_transaction': entry.value,
+        };
+      }).toList();
+
+      // Sort the aggregated list by nbr_transaction in descending order
+      aggregatedList.sort((a, b) => b['nbr_transaction'].compareTo(a['nbr_transaction']));
+
       setState(() {
-        topEntities = fetchedData.take(5).toList();
+        aggregatedEntities = aggregatedList;
         loading = false;
       });
     } catch (e) {
-      print("Error fetching top entities: $e");
+      print("Error fetching entities: $e");
       setState(() {
         loading = false;
       });
@@ -770,7 +791,7 @@ class Page0State extends State<Page0> {
                       children: [
                         SizedBox(height: 20.0),
                         Text(
-                          'Top 5 Activations',
+                          'Entities by Transactions',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: themeProvider.isDarkMode ? Colors.white : Colors.black,
@@ -782,7 +803,7 @@ class Page0State extends State<Page0> {
                             ? Center(child: CircularProgressIndicator())
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: topEntities.asMap().entries.map((entry) {
+                                children: aggregatedEntities.asMap().entries.map((entry) {
                                   int idx = entry.key;
                                   var entity = entry.value;
                                   return Container(
@@ -805,14 +826,14 @@ class Page0State extends State<Page0> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                entity['entity_name'],
+                                                entity['entity_name'] ?? 'Unknown',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16.0,
                                                 ),
                                               ),
                                               SizedBox(height: 5.0),
-                                              Text('Nbr Activation: ${entity['nbr_activation']}'),
+                                              Text('Nbr Transaction: ${entity['nbr_transaction']}'),
                                             ],
                                           ),
                                         ),
@@ -904,7 +925,6 @@ class BlankPage extends StatelessWidget {
     );
   }
 }
-
 
 
 
