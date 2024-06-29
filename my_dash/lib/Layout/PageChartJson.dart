@@ -3683,7 +3683,20 @@ class Page2State extends State<Page2> {
 
     return doughnutDataMap.entries.map((e) => _DoughnutData(e.key, e.value)).toList();
   }
+List<_LineData> getLineChartData() {
+  List<_SalesData> filteredData = getFilteredDataByDate();
+  Map<String, double> lineDataMap = {};
 
+  for (var entry in filteredData) {
+    if (lineDataMap.containsKey(entry.transactionDate)) {
+      lineDataMap[entry.transactionDate] = lineDataMap[entry.transactionDate]! + entry.tauxConversionGlobal;
+    } else {
+      lineDataMap[entry.transactionDate] = entry.tauxConversionGlobal;
+    }
+  }
+
+  return lineDataMap.entries.map((e) => _LineData(e.key, e.value)).toList();
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -3909,6 +3922,27 @@ class Page2State extends State<Page2> {
                       ],
                     ),
                   ),
+                  Container(
+  height: 250,
+  child: SfCartesianChart(
+    primaryXAxis: CategoryAxis(),
+    title: ChartTitle(text: 'Conversion Rate By Date'),
+    primaryYAxis: NumericAxis(),
+    legend: Legend(isVisible: true),
+    tooltipBehavior: TooltipBehavior(enable: true),
+    series: <CartesianSeries<dynamic, dynamic>>[
+      LineSeries<_LineData, String>(
+        dataSource: getLineChartData(),
+        xValueMapper: (_LineData data, _) => data.date,
+        yValueMapper: (_LineData data, _) => data.value,
+        name: 'Taux Conversion Global',
+        dataLabelMapper: (_LineData data, _) => '${data.value.toStringAsFixed(2)}%',
+        dataLabelSettings: DataLabelSettings(isVisible: true),
+      ),
+    ],
+  ),
+)
+
                 ],
               ),
             ),
@@ -3965,4 +3999,8 @@ class _DoughnutData {
   final String date;
   final double value;
 }
-
+class _LineData {
+  _LineData(this.date, this.value);
+  final String date;
+  final double value;
+}
