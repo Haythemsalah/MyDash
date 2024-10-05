@@ -1164,7 +1164,7 @@ class _PageChartDetailedPerfState extends State<PageChartDetailedPerf> {
     return [
       _PieData('Nbr Transaction', totalTransactions.toDouble(), Colors.blue,
           'Nbr Transaction'),
-      _PieData('Nbr Activation', totalActivations.toDouble(), Colors.orange,
+      _PieData('Nbr Activation', totalActivations.toDouble(), Color.fromARGB(223, 255, 115, 34),
           'Nbr Activation'),
     ];
   }
@@ -1273,7 +1273,7 @@ class _PageChartDetailedPerfState extends State<PageChartDetailedPerf> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'KPIs',
+          'Dealings Detailed Dashboard',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -1317,7 +1317,7 @@ class _PageChartDetailedPerfState extends State<PageChartDetailedPerf> {
                         }),
                       ),
                       child: Text(
-                        'Unselect all',
+                        'Clear',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -1331,7 +1331,7 @@ class _PageChartDetailedPerfState extends State<PageChartDetailedPerf> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Transaction Dates:',
+                          'Transaction date:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1385,7 +1385,7 @@ class _PageChartDetailedPerfState extends State<PageChartDetailedPerf> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Entity Type Name:',
+                          'Channel:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1626,7 +1626,7 @@ class _PageChartDetailedPerfState extends State<PageChartDetailedPerf> {
                           yValueMapper: (_BarData sales, _) =>
                               sales.nbrActivation,
                           name: 'Nbr Activation',
-                          color: Colors.orange,
+                          color: Color.fromARGB(223, 255, 115, 34),
                         ),
                         // Trend line for transactions
                         // LineSeries<_BarData, String>(

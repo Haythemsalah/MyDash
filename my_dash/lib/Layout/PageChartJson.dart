@@ -1113,7 +1113,7 @@ class Page2State extends State<Page2> {
     return [
       _PieData('Nbr Transaction', totalTransactions.toDouble(), Colors.blue,
           'Nbr Transaction'),
-      _PieData('Nbr Activation', totalActivations.toDouble(), Colors.orange,
+      _PieData('Nbr Activation', totalActivations.toDouble(), Color.fromARGB(223, 255, 115, 34),
           'Nbr Activation'),
     ];
   }
@@ -1220,7 +1220,7 @@ class Page2State extends State<Page2> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'KPIs',
+          ' Dealings Summary Dashboard',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -1279,7 +1279,7 @@ class Page2State extends State<Page2> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Date de Transaction:',
+                          'Transaction date:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1340,7 +1340,7 @@ class Page2State extends State<Page2> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Canal:',
+                          'Channel:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1553,7 +1553,7 @@ class Page2State extends State<Page2> {
                           yValueMapper: (_BarData sales, _) =>
                               sales.nbrActivation,
                           name: 'Nbr Activation',
-                          color: Colors.orange,
+                          color: Color.fromARGB(223, 255, 115, 34),
                         ),
                       ],
                     ),

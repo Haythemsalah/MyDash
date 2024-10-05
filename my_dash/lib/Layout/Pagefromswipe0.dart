@@ -670,7 +670,7 @@ class _Pagefromswipe0State extends State<Pagefromswipe0> {
                                                 : imagePath == 'assets/dashboard-modern.png' && latestFactWithValueTNDTC_Digital != null
                                                   ? 'TotalRechargeTNDTTC_Digital = ${latestFactWithValueTNDTC_Digital.totalRechargeTNDTTC_Digital}'
                                                   : imagePath == 'assets/customer.png' && latestFactWithValueNombreRecharge != null
-                                                    ? 'NombreRecharge = ${latestFactWithValueNombreRecharge.nombreRecharge}'
+                                                    ? 'Global vs Digital aspects '
                                                     : 'No Image',
                                             style: TextStyle(
                                               color: themeProvider.isDarkMode

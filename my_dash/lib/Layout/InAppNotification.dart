@@ -306,7 +306,7 @@ class _InAppNotificationState extends State<InAppNotification> with SingleTicker
                   SizedBox(height: 20),
                   Center(
                     child: Text(
-                      'Nouveautés',
+                      'News',
                       style: TextStyle(
                         color: const Color.fromARGB(223, 255, 115, 34),
                         fontSize: 22,
@@ -317,7 +317,7 @@ class _InAppNotificationState extends State<InAppNotification> with SingleTicker
                   SizedBox(height: 10),
                   Center(
                     child: Text(
-                      'Le KPI le plus remarquable du jour',
+                      'The most remarkable kpi of the day',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -340,7 +340,7 @@ class _InAppNotificationState extends State<InAppNotification> with SingleTicker
                     SizedBox(height: 20),
                     Center(
                       child: Text(
-                        'KPI Value: 75%', // Example KPI value
+                        'Conversion Value: 75%', // Example KPI value
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
@@ -360,7 +360,7 @@ class _InAppNotificationState extends State<InAppNotification> with SingleTicker
                         ),
                       ),
                       child: Text(
-                        'Charger',
+                        'Load',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),

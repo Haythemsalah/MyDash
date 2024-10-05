@@ -56,15 +56,15 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 16),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: 'Phone number'),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
+              // SizedBox(height: 16),
+              // TextFormField(
+              //   controller: _passwordController,
+              //   decoration: InputDecoration(labelText: 'Password'),
+              //   obscureText: true,
+              // ),
               SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _saveProfile,
